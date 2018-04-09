@@ -10,14 +10,22 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     
+    var flag = Bool()
+    
     var locationManager = CLLocationManager()
+    lazy var geocoder = CLGeocoder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
         self.mapView.showsUserLocation = true
         let homeLocation = CLLocation(latitude: 13.0551, longitude: 80.2221)
         self.setAnnotation(location: homeLocation)
@@ -61,6 +69,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let sourceAnnotation = MKPointAnnotation()
         sourceAnnotation.title = "Hostel"
         sourceAnnotation.coordinate = location.coordinate
+        if self.mapView.annotations.count == 2 {
+            self.mapView.removeAnnotations(self.mapView.annotations)
+        }
         self.mapView.addAnnotation(sourceAnnotation)
     }
     
@@ -71,6 +82,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
         annotationView.pinTintColor = UIColor.red
         return annotationView
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        performForwardGeocoding()
+        return true
+    }
+    
+    func performForwardGeocoding() {
+        if let addressText = addressTextField.text {
+            geocoder.geocodeAddressString(addressText) { (placemarks, error) in
+                self.processResponse(withPlacemarks: placemarks, error: error)
+            }
+        }
+    }
+    
+    private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
+        if let error = error {
+            print("Unable to Forward Geocode Address (\(error))")
+        } else {
+            var location: CLLocation?
+            if let placemarks = placemarks, placemarks.count > 0 {
+                location = placemarks.first?.location
+            }
+            if let location = location {
+                let coordinate = location.coordinate
+                self.setAnnotation(location: location)
+                self.centerMapOnLocation(location: location)
+                print("coordinates", "\(coordinate.latitude), \(coordinate.longitude)")
+            } else {
+                print("No Matching Location Found")
+            }
+        }
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        addressTextField.resignFirstResponder()
     }
 }
 

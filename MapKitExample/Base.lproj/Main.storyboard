@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -18,8 +23,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OTP-R5-H4M">
+                                <rect key="frame" x="10" y="20" width="355" height="64"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="cLu-Bo-lM9"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="bnh-b7-Rm1"/>
+                                </connections>
+                            </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU7-7t-6mp">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="583"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ecI-4L-l3p"/>
                                 </connections>
@@ -28,18 +46,23 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wU7-7t-6mp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="5kH-S9-VMD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OTP-R5-H4M" secondAttribute="trailing" constant="10" id="A3P-JM-mgy"/>
+                            <constraint firstItem="wU7-7t-6mp" firstAttribute="top" secondItem="OTP-R5-H4M" secondAttribute="bottom" id="IPf-dd-KQj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wU7-7t-6mp" secondAttribute="trailing" id="T9w-Lr-Wqb"/>
-                            <constraint firstItem="wU7-7t-6mp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Tso-fJ-sar"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wU7-7t-6mp" secondAttribute="bottom" id="jkE-FH-0Ca"/>
+                            <constraint firstItem="OTP-R5-H4M" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wfp-Sa-CnU"/>
+                            <constraint firstItem="OTP-R5-H4M" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="xZf-2M-jq3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="addressTextField" destination="OTP-R5-H4M" id="LPr-ZN-C26"/>
                         <outlet property="mapView" destination="wU7-7t-6mp" id="Dce-yg-mAd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
