@@ -12,6 +12,8 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var longitudeTextField: UITextField!
+    @IBOutlet weak var coordinatesTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     
@@ -27,9 +29,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         self.view.addGestureRecognizer(tapGesture)
         
         self.mapView.showsUserLocation = true
+        
+        //To display custom location while loading
+        
         let homeLocation = CLLocation(latitude: 13.0551, longitude: 80.2221)
         self.setAnnotation(location: homeLocation)
         self.centerMapOnLocation(location: homeLocation)
+        
+        // Took current lcoations and updations where changes happen
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
@@ -58,6 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         //        self.centerMapOnLocation(location: manager.location!)
     }
     
+    //Region set
     func centerMapOnLocation(location: CLLocation) {
         let regionRadius = 200.0
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
@@ -65,6 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    // Set a pin
     func setAnnotation(location: CLLocation) {
         let sourceAnnotation = MKPointAnnotation()
         sourceAnnotation.title = "Hostel"
@@ -75,6 +84,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         self.mapView.addAnnotation(sourceAnnotation)
     }
     
+    // pin customization
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation.isKind(of: MKUserLocation.self)){
             return nil
@@ -84,11 +95,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return annotationView
     }
     
+    //Textfield delegate
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        performForwardGeocoding()
+        if textField.tag == 0 {
+            textField.resignFirstResponder()
+            performForwardGeocoding()
+        }
+        else if textField.tag == 1 {
+            textField.resignFirstResponder()
+            self.performReverseGeocoding()
+        }
         return true
     }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        self.addressTextField.resignFirstResponder()
+        self.longitudeTextField.resignFirstResponder()
+    }
+    
+    //Forward geocoding
     
     func performForwardGeocoding() {
         if let addressText = addressTextField.text {
@@ -107,18 +133,62 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 location = placemarks.first?.location
             }
             if let location = location {
-                let coordinate = location.coordinate
                 self.setAnnotation(location: location)
                 self.centerMapOnLocation(location: location)
-                print("coordinates", "\(coordinate.latitude), \(coordinate.longitude)")
             } else {
                 print("No Matching Location Found")
             }
         }
     }
     
-    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-        addressTextField.resignFirstResponder()
+    //Reverse geocoding
+    
+    func performReverseGeocoding() {
+        let lat = self.coordinatesTextField.text
+        let long = self.longitudeTextField.text
+        let latitude = Double(lat!)
+        let longitude = Double(long!)
+        if let lat = latitude, let long = longitude {
+            let location = CLLocation(latitude: lat, longitude: long)
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                self.processReverseGeocodingResponse(withPlacemarks: placemarks, error: error)
+            }
+        }
+    }
+    
+    private func processReverseGeocodingResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
+        if let error = error {
+            print("Unable to Reverse Geocode Location (\(error))")
+        } else {
+            if let placemarks = placemarks, let placemark = placemarks.first {
+                if let address = placemark.compactAddress {
+                    print("reverse geocoding result", address)
+                }
+            } else {
+                print("No Matching Addresses Found")
+            }
+        }
+    }
+}
+
+//Extension class
+
+extension CLPlacemark {
+    var compactAddress: String? {
+        if let name = name {
+            var result = name
+            if let street = thoroughfare {
+                result += ", \(street)"
+            }
+            if let city = locality {
+                result += ", \(city)"
+            }
+            if let country = country {
+                result += ", \(country)"
+            }
+            return result
+        }
+        return nil
     }
 }
 

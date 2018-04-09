@@ -42,11 +42,53 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ecI-4L-l3p"/>
                                 </connections>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7U-aD-Y9Z">
+                                <rect key="frame" x="10" y="84" width="355" height="30"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edr-AI-MeF">
+                                        <rect key="frame" x="8" y="0.0" width="158.5" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.17586495539999999" blue="0.081612723210000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4Es-ol-sTH"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wUZ-8w-dhE">
+                                        <rect key="frame" x="196.5" y="0.0" width="158.5" height="30"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="QwG-uM-Uof"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="nCJ-GP-kJa"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="edr-AI-MeF" firstAttribute="width" secondItem="wUZ-8w-dhE" secondAttribute="width" id="1JV-Y5-TCi"/>
+                                    <constraint firstAttribute="trailing" secondItem="wUZ-8w-dhE" secondAttribute="trailing" id="BiN-Vh-P2R"/>
+                                    <constraint firstAttribute="height" constant="30" id="CGc-1r-g66"/>
+                                    <constraint firstItem="edr-AI-MeF" firstAttribute="top" secondItem="d7U-aD-Y9Z" secondAttribute="top" id="I54-Qb-Aeq"/>
+                                    <constraint firstItem="wUZ-8w-dhE" firstAttribute="top" secondItem="d7U-aD-Y9Z" secondAttribute="top" id="MbU-1T-iZF"/>
+                                    <constraint firstItem="edr-AI-MeF" firstAttribute="leading" secondItem="d7U-aD-Y9Z" secondAttribute="leading" constant="8" id="Ufh-JD-e4R"/>
+                                    <constraint firstItem="wUZ-8w-dhE" firstAttribute="leading" secondItem="edr-AI-MeF" secondAttribute="trailing" constant="30" id="WR1-wg-BG7"/>
+                                    <constraint firstAttribute="bottom" secondItem="wUZ-8w-dhE" secondAttribute="bottom" id="ZV1-jU-NKJ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wU7-7t-6mp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="5kH-S9-VMD"/>
+                            <constraint firstItem="d7U-aD-Y9Z" firstAttribute="top" secondItem="OTP-R5-H4M" secondAttribute="bottom" id="7pY-8i-UI3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OTP-R5-H4M" secondAttribute="trailing" constant="10" id="A3P-JM-mgy"/>
+                            <constraint firstItem="d7U-aD-Y9Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="DQ1-T3-oGR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d7U-aD-Y9Z" secondAttribute="trailing" constant="10" id="ICB-22-DXp"/>
                             <constraint firstItem="wU7-7t-6mp" firstAttribute="top" secondItem="OTP-R5-H4M" secondAttribute="bottom" id="IPf-dd-KQj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wU7-7t-6mp" secondAttribute="trailing" id="T9w-Lr-Wqb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wU7-7t-6mp" secondAttribute="bottom" id="jkE-FH-0Ca"/>
@@ -57,6 +99,8 @@
                     </view>
                     <connections>
                         <outlet property="addressTextField" destination="OTP-R5-H4M" id="LPr-ZN-C26"/>
+                        <outlet property="coordinatesTextField" destination="edr-AI-MeF" id="3eP-cE-rJB"/>
+                        <outlet property="longitudeTextField" destination="wUZ-8w-dhE" id="EG2-rX-aKO"/>
                         <outlet property="mapView" destination="wU7-7t-6mp" id="Dce-yg-mAd"/>
                     </connections>
                 </viewController>
