@@ -46,17 +46,17 @@
                                 <rect key="frame" x="0.0" y="84" width="375" height="583"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Current_Location" translatesAutoresizingMaskIntoConstraints="NO" id="85A-ur-mMH">
-                                        <rect key="frame" x="172.5" y="245" width="30" height="40"/>
+                                        <rect key="frame" x="167.5" y="246.5" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Hp5-6W-rw7"/>
-                                            <constraint firstAttribute="height" constant="40" id="VVq-Xc-k0D"/>
+                                            <constraint firstAttribute="height" constant="40" id="0eZ-FA-QL3"/>
+                                            <constraint firstAttribute="width" constant="40" id="w8d-HF-VLg"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="85A-ur-mMH" firstAttribute="top" secondItem="ZCV-uY-zUE" secondAttribute="top" constant="245" id="9rY-jq-FlC"/>
-                                    <constraint firstItem="85A-ur-mMH" firstAttribute="centerX" secondItem="ZCV-uY-zUE" secondAttribute="centerX" id="miV-U7-3fv"/>
+                                    <constraint firstItem="85A-ur-mMH" firstAttribute="centerX" secondItem="ZCV-uY-zUE" secondAttribute="centerX" id="Gyb-MH-4HZ"/>
+                                    <constraint firstItem="85A-ur-mMH" firstAttribute="centerY" secondItem="ZCV-uY-zUE" secondAttribute="centerY" constant="-25" id="e1i-cg-fZL"/>
                                 </constraints>
                             </view>
                         </subviews>
